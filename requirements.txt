@@ -1,0 +1,22 @@
+# Core dependencies
+python-dotenv>=0.19.0
+requests>=2.26.0
+cryptography>=36.0.0
+
+# Platform-specific dependencies
+# Windows
+# pywin32>=303; sys_platform == 'win32'
+
+# macOS and Linux
+keyring>=23.0.0; sys_platform != 'win32'
+
+# Linux
+secretstoragelib>=0.1.0; sys_platform == 'linux'
+
+# Testing
+pytest>=6.2.5
+pytest-cov>=2.12.1
+
+# Documentation
+sphinx>=4.0.0
+sphinx-rtd-theme>=1.0.0
