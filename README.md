@@ -70,6 +70,11 @@ Displays connection status, server details, and real-time performance metrics.
 
 ### Prerequisites
 
+**macOS Developers:**
+```bash
+brew install dbus
+```
+
 - Python 3.8+
 - Required libraries (see requirements.txt)
 
