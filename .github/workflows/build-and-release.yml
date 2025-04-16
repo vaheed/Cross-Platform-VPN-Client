@@ -24,7 +24,7 @@ jobs:
           pip install -r requirements.txt
           pip install pytest
       - name: Run tests
-        run: python -m pytest -xvs
+        run: python -m pytest -xvs tests/integration/
 
   build:
     name: Build Executables

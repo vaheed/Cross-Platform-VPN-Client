@@ -44,20 +44,29 @@ def build_for_platform(target_platform: Optional[str] = None) -> bool:
     Returns:
         bool: True if the build was successful, False otherwise.
     """
-    # If no target platform is specified, use the current platform
-    if target_platform is None:
-        target_platform = get_platform()
+    import logging
+    logger = logging.getLogger(__name__)
     
-    print(f"Building for platform: {target_platform}")
-    
-    # Base PyInstaller command
-    cmd = [
-        sys.executable, "-m", "PyInstaller",
-        "--onefile",  # Create a single executable file
-        "--clean",    # Clean PyInstaller cache
-        "--name", f"vpnclient-{target_platform}",
-        "main.py"     # Entry point
-    ]
+    valid_platforms = ['windows', 'macos', 'linux']
+    if target_platform not in valid_platforms:
+        raise ValueError(f"Invalid platform: {target_platform}. Supported platforms: {valid_platforms}")
+
+    try:
+        logger.info(f"Starting build for {target_platform}")
+        print(f"Building for platform: {target_platform}")
+        
+        # Validate build environment
+        if target_platform == 'macos' and not sys.platform == 'darwin':
+            raise EnvironmentError("macOS builds require Darwin environment")
+        
+        # Base PyInstaller command
+        cmd = [
+            sys.executable, "-m", "PyInstaller",
+            "--onefile",  # Create a single executable file
+            "--clean",    # Clean PyInstaller cache
+            "--name", f"vpnclient-{target_platform}",
+            "main.py"     # Entry point
+        ]
     
     # Platform-specific options
     if target_platform == "windows":
@@ -98,6 +107,9 @@ def run_tests():
 def main():
     """Main entry point for the build script."""
     import argparse
+    import logging
+    
+    logging.basicConfig(level=logging.INFO)
     
     parser = argparse.ArgumentParser(description="Build VPN Client executables")
     parser.add_argument(

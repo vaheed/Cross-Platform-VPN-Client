@@ -40,19 +40,19 @@ class VPNProtocolFactory:
     """Factory class for creating VPN protocol implementations."""
     
     @staticmethod
-    def create_connection(protocol_type: str) -> Optional[VPNConnection]:
+    def create_connection(protocol_type: str, config: dict) -> Optional[VPNConnection]:
         try:
             if protocol_type == 'openvpn':
-                return OpenVPNConnection()
+                return OpenVPNConnection(config)
             elif protocol_type == 'sstp':
                 from protocols.sstp.sstp_connection import SSTPConnection
-                return SSTPConnection()
+                return SSTPConnection(config)
             elif protocol_type == 'l2tp':
                 from protocols.l2tp.l2tp_connection import L2TPConnection
-                return L2TPConnection()
+                return L2TPConnection(config)
             elif protocol_type == 'pptp':
                 from protocols.pptp.pptp_connection import PPTPConnection
-                return PPTPConnection()
+                return PPTPConnection(config)
             else:
                 raise ValueError(f"Unsupported protocol: {protocol_type}")
         except Exception as e:
