@@ -14,9 +14,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Install macOS dependencies
+        if: matrix.os == 'macos-latest'
+        run: brew install dbus pkg-config
       - name: Install Linux system dependencies
         if: matrix.os == 'ubuntu-latest'
-        run: sudo apt-get update && sudo apt-get install -y libdbus-1-dev
+        run: sudo apt-get update && sudo apt-get install -y libdbus-1-dev pkg-config
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -46,9 +49,12 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
+      - name: Install macOS dependencies
+        if: matrix.os == 'macos-latest'
+        run: brew install dbus pkg-config
       - name: Install Linux system dependencies
         if: matrix.os == 'ubuntu-latest'
-        run: sudo apt-get update && sudo apt-get install -y libdbus-1-dev
+        run: sudo apt-get update && sudo apt-get install -y libdbus-1-dev pkg-config
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -76,6 +82,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Install macOS dependencies
+        if: matrix.os == 'macos-latest'
+        run: brew install dbus pkg-config
       - name: Download all artifacts
         uses: actions/download-artifact@v3
         with:
